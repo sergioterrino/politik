@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PolitikApplication<politik>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.stb.politik.PolitikApplication",
+            "projectName": "politik",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
