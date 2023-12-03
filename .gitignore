@@ -4,3 +4,5 @@
 # Ignorar archivos del frontend
 /politik-frontend/node_modules/
 /politik-frontend/dist/
+
+.vscode
