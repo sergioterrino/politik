@@ -1,3 +1,23 @@
+# Node dependencies
+/node_modules
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+
+# IDEs and editors
+/.idea
+/.vscode
+
+# Log files
+/*.log
+
+# Environment variables
+.env
+
+
+
 # Gradle files
 .gradle/
 build/
