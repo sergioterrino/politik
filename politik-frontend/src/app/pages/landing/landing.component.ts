@@ -1,5 +1,7 @@
+import { MatDialog } from '@angular/material/dialog';
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { SignupComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-landing',
@@ -8,22 +10,54 @@ import { Router } from '@angular/router';
 })
 export class LandingComponent {
 
-  constructor(private router: Router,  private el: ElementRef, private renderer: Renderer2) { }
+  constructor(
+    private router: Router,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private dialog: MatDialog
+    ) { }
 
-  ngAfterViewInit() {
-    const politicRole = this.el.nativeElement.querySelector('#btnL');
-    const citizenRole = this.el.nativeElement.querySelector('#btnR');
+    ngAfterViewInit() {
+      const politicRole = this.el.nativeElement.querySelector('#btnL');
+      const citizenRole = this.el.nativeElement.querySelector('#btnR');
 
-    this.renderer.listen(politicRole, 'click', () => {
-      this.navigateToSignup('politic');
-    });
+      this.renderer.listen(politicRole, 'click', () => {
+        this.openDialogSignup('politic');
+      });
 
-    this.renderer.listen(citizenRole, 'click', () => {
-      this.navigateToSignup('citizen');
-    });
-  }
+      this.renderer.listen(citizenRole, 'click', () => {
+        this.openDialogSignup('citizen');
+      });
+    }
 
-  navigateToSignup(role: string) {
-    this.router.navigate(['/signup'], { queryParams: { role: role } });
-  }
+    openDialogSignup(role: string) {
+      this.dialog.open(SignupComponent, {
+        data: { role: role },
+        width: '40%',
+        height: '90%'
+      });
+    }
+
+
+
+
+
+
+  // esto es sin modal
+  // ngAfterViewInit() {
+  //   const politicRole = this.el.nativeElement.querySelector('#btnL');
+  //   const citizenRole = this.el.nativeElement.querySelector('#btnR');
+
+  //   this.renderer.listen(politicRole, 'click', () => {
+  //     this.navigateToSignup('politic');
+  //   });
+
+  //   this.renderer.listen(citizenRole, 'click', () => {
+  //     this.navigateToSignup('citizen');
+  //   });
+  // }
+
+  // navigateToSignup(role: string) {
+  //   this.router.navigate(['/signup'], { queryParams: { role: role } });
+  // }
 }

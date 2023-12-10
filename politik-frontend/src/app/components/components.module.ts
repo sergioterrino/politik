@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ListOfUsersComponent } from './list-of-users/list-of-users.component';
 
 
-
 @NgModule({
   declarations: [
-    ListOfUsersComponent
+    ListOfUsersComponent,
   ],
   imports: [
     CommonModule,

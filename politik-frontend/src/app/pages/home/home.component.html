@@ -1,1 +1,84 @@
-<p>home works!</p>
+<div id="container">
+  <div id="sideBar">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white">
+      <a href="/home" class="d-flex align-items-center text-white text-decoration-none">
+        <div id="title">POLITIK</div>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="/landing" class="nav-link" aria-current="page">
+            <i class="fa-solid fa-house"></i>
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="/home" class="nav-link text-white">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Explora
+          </a>
+        </li>
+        <li>
+          <a href="/home" class="nav-link text-white">
+            <i class="fa-regular fa-bell"></i>
+            Notificaciones
+          </a>
+        </li>
+        <li>
+          <a href="/home" class="nav-link text-white">
+            <i class="fa-regular fa-user"></i>
+            Perfil
+          </a>
+        </li>
+      </ul>
+      <hr>
+      <button class="btn btn-primary" id="postBtn">Post</button>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="profile photo" width="42" height="42" class="rounded-circle me-3">
+          <strong>@username</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small" aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" href="/start">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="main">
+    <div id="writePost">
+      <div id="img">
+        <img src="https://github.com/mdo.png" alt="profile photo" width="52" height="52" class="rounded-circle me-3">
+      </div>
+      <div id="panel">
+        <div id="text">
+          <textarea placeholder="What is happening ?"></textarea>
+        </div>
+        <div id="btns">
+          <nav class="navbar">
+            <a class="navbar-brand text-center" href="#"><i class="fa-solid fa-square-poll-vertical"></i></a>
+            <a class="navbar-brand text-center" href=""><i class="fa-regular fa-image"></i></a>
+            <a class="navbar-brand text-center" href=""><i class="fa-regular fa-face-smile"></i></a>
+          </nav>
+          <div id="postIt">
+            <button class="btn btn-primary">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="content">
+      postsss
+    </div>
+  </div>
+  <div id="search">
+    <nav class="navbar navbar-expand-lg  rounded-5">
+      <div class="container-fluid">
+        <form class="d-flex align-items-center" role="search">
+          <i class="fa-solid fa-magnifying-glass text-secondary me-1"></i>
+          <input class="form-control form-control-sm bg-transparent border-0" type="search" placeholder="Search" aria-label="Search">
+        </form>
+      </div>
+    </nav>
+  </div>
+</div>

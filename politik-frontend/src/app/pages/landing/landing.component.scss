@@ -40,7 +40,7 @@ body {
   right:0%;
   left: 0%;
   color: rgb(255, 255, 255);
-  font-style: bold;
+  font-family: 'Passion One', sans-serif;
   letter-spacing: 0.02vw;
   font-size: 6vw;
   font-weight: bolder;
@@ -82,7 +82,7 @@ body {
   font-weight: bolder;
   text-align: center;
   vertical-align: middle;
-  z-index: 1;
+  // z-index: 1;
 }
 
 .btn_container{
@@ -112,7 +112,7 @@ body {
     height: 100%;
     width: 100%;
     position: relative;
-    margin-bottom: 4%;
+    margin-bottom: 8%;
     filter: brightness(60%);
   }
 }
@@ -154,4 +154,3 @@ body {
   text-align: center;
   transition: filter 0.3s ease; /* Transición suave para el efecto hover */
 }
-

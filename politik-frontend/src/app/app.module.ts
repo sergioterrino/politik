@@ -4,22 +4,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
-import { HomeComponent } from './pages/home/home.component';
-import { LandingComponent } from './pages/landing/landing.component';
-import { SignupComponent } from './pages/signup/signup.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { PagesModule } from './pages/pages.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    LandingComponent,
-    SignupComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ComponentsModule
+    ComponentsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    CommonModule,
+    PagesModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
