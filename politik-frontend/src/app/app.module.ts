@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { PagesModule } from './pages/pages.module';
 import { RouterModule } from '@angular/router';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -25,13 +25,23 @@
     </div>
     <h3 class="description">Introduce tu contraseña</h3>
     <div class="form-group">
-      <input type="text" class="form-control" id="username" value="test@example.com" readonly>
-      <label for="username">Teléfono, email o nombre de usuario</label>
+      <input type="text" class="form-control" id="username2" value="test@example.com" readonly>
+      <label for="username2">Teléfono, email o nombre de usuario</label>
     </div>
-    <div class="form-group">
-      <input type="password" id="password" class="form-control" placeholder="">
+    <div class="form-group" id="formGroupPassword">
+      <div>
+        <input [type]="showPassword ? 'text' : 'password'" id="password" class="form-control" placeholder="">
+        <label for="password">Contraseña</label>
+      </div>
+      <div id="eye">
+        <i (click)="togglePassword()" class="fa" [ngClass]="{'fa-eye-slash': showPassword, 'fa-eye': !showPassword}"></i>
+      </div>
+    </div>
+    <!-- <div class="form-group">
+      <input [type]="showPassword ? 'text' : 'password'" id="password" class="form-control" placeholder="">
+      <i (click)="togglePassword()" class="fa" [ngClass]="{'fa-eye-slash': showPassword, 'fa-eye': !showPassword}"></i>
       <label for="password">Contraseña</label>
-    </div>
+    </div> -->
     <small id="forgotPassword"><a (click)="openForgotPassword()">¿Olvidaste la contraseña?</a></small>
     <div class="btn-container">
       <button type="submit" class="btn btn-primary" (click)="checkPassword()">Siguiente</button>

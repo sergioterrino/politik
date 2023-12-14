@@ -1,0 +1,60 @@
+<div id="container">
+  <app-side-bar #sidebar></app-side-bar>
+  <div id="main" #main>
+    <header>
+      <button class="btn"><i class="fa-solid fa-arrow-left"></i></button>
+      <div>
+        <h2>Name</h2>
+        <h4>333 posts</h4>
+      </div>
+    </header>
+    <div id="bio">
+      <div id="imgs">
+        <div id="imgBackground">
+          <img src="../../../assets/images/imgBackground.jpg" alt="image of Background">
+        </div>
+
+        <div id="imgProfile">
+          <img src="../../../assets/images/imgProfile.jpg" alt="image of Profile">
+        </div>
+      </div>
+      <div id="editProfile">
+        <button class="btn btn-dark">Editar perfil</button>
+      </div>
+      <div id="data">
+        <div id="name">Name name</div>
+        <div id="username">@username</div>
+        <div id="dates">
+          <div id="birthday"><i class="fa-solid fa-cake-candles"></i> Nacido September 30, 1995</div>
+          <div id="created"><i class="fa-solid fa-calendar-days"></i> Se unió March 2020</div>
+        </div>
+        <div id="followers">
+          <div><b>112</b><span>Following</span></div>
+          <div><b>14</b><span>Followers</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="tabs">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let tab of tabs; let index = index" (click)="setTab(index)">
+          <a class="nav-link" [ngClass]="activatedTab == index ? 'active-tab' : ''">{{tab}}</a>
+        </li>
+      </ul>
+    </div>
+    <div id="content">
+      <div id="posts" *ngIf="activatedTab == 0">
+          <app-posts-profile></app-posts-profile>
+      </div>
+      <div id="polls" *ngIf="activatedTab == 1">
+        <app-polls-profile></app-polls-profile>
+      </div>
+      <div id="reposts" *ngIf="activatedTab == 2">
+        <app-reposts-profile></app-reposts-profile>
+      </div>
+    </div>
+  </div>
+  <div id="rightBar" #rightBar>
+    <app-search-bar></app-search-bar>
+    <app-suggestions></app-suggestions>
+  </div>
+</div>

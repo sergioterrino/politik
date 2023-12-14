@@ -36,4 +36,10 @@ export class LoginComponent {
     this.closeDialog();
     this.router.navigate(['/home']);
   }
+
+  //para mostrar/ocultar la contraseña
+  showPassword = false;
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 }
