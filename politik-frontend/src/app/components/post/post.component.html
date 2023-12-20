@@ -7,8 +7,8 @@
     </div>
     <div id="data">
       <div id="header">
-        <div id="name">name</div>
-        <div id="username">@username</div>
+        <div id="name"><a routerLink="/profile/username">name</a></div>
+        <div id="username"><a routerLink="/profile/username">@username</a></div>
         <div id="date">·&nbsp;&nbsp;&nbsp;2h</div>
         <div id="btnHeader"><button class="btn btn-dark"><i class="fa-solid fa-ellipsis"></i></button></div>
       </div>
@@ -20,7 +20,11 @@
   </main>
   <footer>
     <div id="btns">
-      botones
+      <nav class="navbar">
+        <a class="navbar-brand text-center" href="modal"><i class="fa-regular fa-comment"></i>&nbsp;104</a>
+        <a class="navbar-brand text-center" href="abrir popover"><i class="fa-solid fa-retweet"></i>&nbsp;1.5K</a>
+        <a class="navbar-brand text-center" href="accion dar like"><i class="fa-regular fa-heart"></i>&nbsp;5.3K</a>
+      </nav>
     </div>
   </footer>
 </div>

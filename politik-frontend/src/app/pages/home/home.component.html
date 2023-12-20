@@ -7,7 +7,7 @@
       </div>
       <div id="panel">
         <div id="text">
-          <textarea placeholder="What is happening ?"></textarea>
+          <textarea placeholder="What is happening ?"(input)="adjustTextarea($event)"></textarea>
         </div>
         <div id="btns">
           <nav class="navbar">
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div id="content">
-      postsss
+      <app-posts-profile></app-posts-profile>
     </div>
   </div>
   <div id="rightBar">

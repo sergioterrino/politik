@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-
+  adjustTextarea(event: any): void {
+    let textarea: any = event.target;
+    textarea.style.overflow = 'hidden';
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
 }

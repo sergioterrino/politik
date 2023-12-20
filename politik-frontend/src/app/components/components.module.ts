@@ -9,6 +9,8 @@ import { PostsProfileComponent } from './posts-profile/posts-profile.component';
 import { PollsProfileComponent } from './polls-profile/polls-profile.component';
 import { RepostsProfileComponent } from './reposts-profile/reposts-profile.component';
 import { PostComponent } from './post/post.component';
+import { LifeBookComponent } from './life-book/life-book.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,10 +23,13 @@ import { PostComponent } from './post/post.component';
     PollsProfileComponent,
     RepostsProfileComponent,
     PostComponent,
+    LifeBookComponent,
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     ListOfUsersComponent,
@@ -34,6 +39,8 @@ import { PostComponent } from './post/post.component';
     PostsProfileComponent,
     PollsProfileComponent,
     RepostsProfileComponent,
+    PostComponent,
+    LifeBookComponent,
   ]
 })
 export class ComponentsModule { }

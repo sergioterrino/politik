@@ -7,26 +7,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 })
 export class ProfileComponent {
 
-  tabs: string[] = ['Posts', 'Polls', 'Reposts'];
+  tabs: string[] = ['Posts', 'Polls', 'Reposts', 'LifeBook'];
 
-  activatedTab: number = 0;
+  activatedTab: number = 0; //paso esta variable con el index para saber que tab esta activo
 
   setTab(index: number){
     this.activatedTab = index;
   }
-
-  @ViewChild('main') main!: ElementRef;
-  @ViewChild('sidebar') sidebar!: ElementRef;
-  @ViewChild('rightBar') rightBar!: ElementRef;
-
-  ngAfterViewInit() {
-    this.sidebar.nativeElement.addEventListener('wheel', this.scrollMain.bind(this));
-    this.rightBar.nativeElement.addEventListener('wheel', this.scrollMain.bind(this));
-  }
-
-  scrollMain(event: WheelEvent) {
-    event.preventDefault();
-    this.main.nativeElement.scrollTop += event.deltaY;
-  }
-
 }

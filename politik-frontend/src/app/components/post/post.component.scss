@@ -1,63 +1,103 @@
-#content{
+#content {
   display: flex;
   flex-direction: column;
   margin: 1%;
-  padding: 2%;
-  background-color: rgb(32, 32, 32);
+  padding: 1%;
+  padding-bottom: 0%;
+  background-color: rgb(0, 0, 0);
 
-  main{
+  main {
     display: flex;
     gap: 1%;
-    margin-bottom: 1%;
+    // margin-bottom: 1%;
 
-    #imgProfile{
+    #imgProfile {}
 
-    }
-    #data{
+    #data {
       display: flex;
       flex-direction: column;
       width: 100%;
-      #header{
+
+      #header {
         display: flex;
         justify-content: start;
         align-items: center;
         gap: 2%;
         width: 100%;
 
-        #name{
+        #name {
           color: white;
           font-weight: bold;
+
+          a{
+            text-decoration: none;
+            color: white;
+          }
+          a:hover{
+            text-decoration: underline;
+          }
         }
 
-        #username{
+        #username {
           color: rgb(122, 122, 122);
+          a{
+            text-decoration: none;
+            color: rgb(122, 122, 122);
+          }
         }
 
-        #btnHeader{
+        #btnHeader {
           margin-left: auto; //sería como el justify-self del Grid
-          button{
+
+          button {
             border: none;
             border-radius: 50px;
             background-color: transparent;
           }
-          button:hover{
+
+          button:hover {
             background-color: rgb(32, 32, 32);
           }
         }
       }
 
-      #text{
+      #text {
         margin-bottom: 1%;
       }
 
-      #media{
+      #media {
         width: 100%;
 
-        img{
+        img {
           width: auto;
           max-width: 100%;
           border: 1px solid rgb(32, 32, 32);
           border-radius: 15px;
+        }
+      }
+    }
+  }
+
+  footer {
+
+    #btns {
+
+      .navbar {
+        justify-content: space-around;
+
+        a {
+          width: 10%;
+          font-size: 1em;
+          color: rgb(131, 131, 131);
+          margin-right: 0;
+          i {
+            font-size: 1.2em;
+          }
+        }
+
+        a:hover {
+          border-radius: 50px;
+          background-color: rgb(37, 37, 37);
         }
       }
     }

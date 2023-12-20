@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RouterModule } from '@angular/router';
+import { ExploreComponent } from './explore/explore.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,11 +22,14 @@ import { RouterModule } from '@angular/router';
     LoginComponent,
     ForgotPasswordComponent,
     ProfileComponent,
+    ExploreComponent,
   ],
   imports: [
     CommonModule,
     ComponentsModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     HomeComponent,
@@ -34,6 +39,7 @@ import { RouterModule } from '@angular/router';
     LoginComponent,
     ForgotPasswordComponent,
     ProfileComponent,
+    ExploreComponent,
   ]
 })
 export class PagesModule { }

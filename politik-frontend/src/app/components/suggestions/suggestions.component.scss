@@ -1,10 +1,10 @@
-#container{
+#container {
   background-color: rgba(71, 71, 71, 0.4);
   border-radius: 15px;
   padding: 3%;
 }
 
-header{
+header {
   color: rgb(255, 255, 255);
   margin-bottom: 5%;
 }
@@ -17,23 +17,22 @@ header{
 
   #username {
     width: 54%;
-
+    overflow: hidden; // Evita que el texto sobresalga
+    white-space: nowrap; // Evita saltos de línea
     h5 {
       margin: 0;
       padding: 0;
       font-size: 1rem;
       color: rgb(122, 122, 122);
     }
-
-    .name h5{
+    .name h5 {
       color: white;
     }
-
   }
 
   #btn {
     width: 26%;
-
+    margin-left: auto; // sería un justify-self: end;
     button {
       width: 100%;
       padding: 3% 1%;

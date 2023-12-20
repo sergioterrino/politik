@@ -3,6 +3,12 @@
   height: 100%;
   background-color: rgb(0, 0, 0);
   border-right: 1px solid rgb(63, 63, 63);
+  padding: 5.885%;
+  padding-left: 0;
+
+  #content {
+    height: 100%;
+  }
 
   #title {
     font-family: 'Passion One', sans-serif;
@@ -11,12 +17,14 @@
   }
 
   .nav-link.active-link {
-    color: dodgerblue; /* Cambia el color del texto a azul */
+    color: dodgerblue;
+    /* Cambia el color del texto a azul */
   }
 
   li {
     width: 100%;
     border-radius: 25px;
+
     a {
       font-size: 1.3vw;
       color: rgb(255, 255, 255);
@@ -35,27 +43,37 @@
     margin-bottom: 10%;
     margin-top: 5%;
     border-radius: 25px;
+    padding: 3%;
   }
 
   .dropdown {
-    position: absolute;
-    bottom: 0;
+    margin-top: auto; //hace que el dropdown se quede abajo del todo
     width: 100%;
-    margin-bottom: 10%;
+    max-width: calc(100%);
+    margin-bottom: 5%;
+
+    a {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
 
     li:hover {
       background-color: rgb(52, 60, 68);
     }
-    strong {
-      margin-right: 3%;
-      font-size: 1.2vw;
-    }
+
     a:hover {
       border-radius: 25px;
       background-color: rgb(52, 60, 68);
     }
+
     #username {
-      width: 54%;
+      width: 73%; //esto en principio da igual
+      max-width: 73%;
+      overflow: hidden; // Evita que el texto sobresalga
+      white-space: nowrap; // Evita saltos de línea
+      text-overflow: ellipsis; // Muestra puntos suspensivos si el texto es demasiado largo
+      // padding-right: 6px; // Espacio entre el texto y el icono
 
       h5 {
         margin: 0;
@@ -64,11 +82,18 @@
         color: rgb(122, 122, 122);
       }
 
-      .name h5{
+      .name h5 {
+        font-size: 0.9rem;
         color: white;
       }
 
     }
-  }
 
+    ul {
+      li a:hover {
+        background-color: rgb(26, 26, 26);
+        border-radius: 2px;
+      }
+    }
+  }
 }

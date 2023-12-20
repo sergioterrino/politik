@@ -4,16 +4,30 @@
   // padding: 7% 0 7% 5%;
 
   .navbar {
-    // border: 1px solid grey;
-    background-color: rgba(71, 71, 71, 0.4);
-    i {
-      font-size: 1rem;
-    }
-    input{
-      color: white;
-    }
-    input::placeholder{
-      color: rgb(168, 168, 168); //para cambiar el color del texto del placeholder
+    background-color: rgba(41, 41, 41, 0.4);
+
+    form{
+      width:100%;
+      i {
+        font-size: 1rem;
+      }
+      input{
+        color: white;
+      }
+      input::placeholder{
+        color: rgb(168, 168, 168); //para cambiar el color del texto del placeholder
+      }
     }
   }
+  //para cuando se clicke en el input
+  input.form-control:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .navbar.focused {
+    border: 1px solid rgba(13,110,253,255);
+    background-color: transparent;
+  }
+
 }
+

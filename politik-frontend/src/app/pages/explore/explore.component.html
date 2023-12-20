@@ -1,0 +1,35 @@
+<div id="container">
+  <app-side-bar></app-side-bar>
+  <div id="main">
+    <div id="search">
+      <app-search-bar (search)="observerChangeSearch($event)"></app-search-bar>
+    </div>
+    <!-- <div id="searchBarr">
+      <div id="searchBar">
+        <nav id="navbar" class="navbar navbar-expand-lg rounded-5">
+          <div class="container-fluid">
+            <form class="d-flex align-items-center" role="search">
+              <i id="i" class="fa-solid fa-magnifying-glass text-secondary me-1"></i>
+              <input class="form-control bg-transparent border-0" type="search" placeholder="Search" aria-label="Search"
+              (focus)="onFocus()" (blur)="onBlur()" [formControl]="control">
+            </form>
+          </div>
+        </nav>
+      </div>
+    </div> -->
+    <div id="results">
+      <div id="user" *ngFor="let user of filteredUsers" [routerLink]="['/profile', user.username]">
+        <div id="imgUser">
+          <img src="https://i.pravatar.cc/300" alt="profile photo" width="60" height="60" class="rounded-circle me-4">
+        </div>
+        <div id="username">
+          <div class="name"><h5>{{user.name}} {{user.lastname}}</h5></div>
+          <div><h5>@{{user.username}}</h5></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="rightBar">
+    <app-suggestions></app-suggestions>
+  </div>
+</div>
