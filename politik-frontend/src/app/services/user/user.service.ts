@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -16,5 +16,11 @@ export class UserService {
   //Este metodo obtiene todos los usuarios del backend
   getUsersList(): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.baseURL}`);
+  }
+
+  //Comrpobar si un usuario existe en el backend byPhone
+  getUserByPhone(phone: string): Observable<User> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post<User>(`${this.baseURL}/phone`, phone, { headers: headers });
   }
 }
