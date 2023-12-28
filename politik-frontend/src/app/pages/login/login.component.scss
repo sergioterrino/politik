@@ -45,7 +45,7 @@ form {
 
 .form-group {
   position: relative;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
   margin-top: 8%;
 
   .form-control {
@@ -86,14 +86,14 @@ form {
   }
 
   //Esto para la 2parte del login
-  #username2 {
+  #namePhoneEmail2 {
     color: rgb(63, 63, 63);
     background-color: rgba(32, 32, 32, 0.4);
     border: none;
   }
 
-  #username2:focus+label,
-  #username2:not(:placeholder-shown)+label {
+  #namePhoneEmail2:focus+label,
+  #namePhoneEmail2:not(:placeholder-shown)+label {
     font-size: 1vw;
     top: 0;
     color: rgb(39, 39, 39);
@@ -104,6 +104,7 @@ form {
 //esto para meter el ojo en el input password
 #formGroupPassword {
   position: relative;
+  margin-bottom: 3%;
 
   #eye {
     position: absolute;
@@ -174,3 +175,14 @@ form {
     text-decoration: none;
   }
 }
+
+/*-----para los errores del form----------------------------------*/
+.invalid input.form-control {
+  border-color: red;
+}
+.error-message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: -2%;
+}
+

@@ -4,13 +4,12 @@ import { ListOfUsersComponent } from './components/list-of-users/list-of-users.c
 import { LandingComponent } from './pages/landing/landing.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { StartComponent } from './pages/start/start.component';
-import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ExploreComponent } from './pages/explore/explore.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/start', pathMatch: 'full' },
   { path: 'start', component: StartComponent },
   { path: 'landing', component: LandingComponent },
   { path: 'signup', component: SignupComponent },

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -20,5 +20,20 @@ public class UserServiceImpl implements UserService{
     public User getUserByPhone(String phone) {
         return this.userRepository.findByPhone(phone);
     }
-    
+
+    @Override
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return this.userRepository.findByUsername(username);
+    }
+
 }
