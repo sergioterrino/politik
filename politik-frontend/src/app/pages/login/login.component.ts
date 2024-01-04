@@ -17,6 +17,11 @@ export class LoginComponent {
 
   formLogin!: FormGroup;
 
+  //para las peticiones al backend, si encuentra un usuario con ese phone, email or username -> true exists
+  phoneExists: boolean = false; //True -> si el teléfono existe en la base de datos
+  usernameExists: boolean = false; //True -> si el username existe en la base de datos
+  emailExists: boolean = false; //True -> si el email existe en la base de datos
+
   usernameNotExists: boolean = false; //Por default, siempre existe el usuario, para que no salga el error-message
   phoneNotExists: boolean = false; //True -> si el teléfono no existe en la base de datos
   emailNotExists: boolean = false; //True -> si el email no existe en la base de datos
@@ -50,10 +55,60 @@ export class LoginComponent {
     if (this.showSecondPart) {
       const secondPart = formLogin.get('secondPart');
       if (secondPart?.valid) {
-        console.log('Datos enviados del formLogin ', formLogin.value);
-        console.log("Formulario válido");
-        this.closeDialog();
-        this.router.navigate(['/home']);
+        const namePhoneEmail = formLogin.get('secondPart.namePhoneEmail2')?.value;
+        const password = formLogin.get('secondPart.password')?.value;
+        //he de enviar el namePhoneEmail y el password al backend. Checkear si para dicho user, el password es correcto
+        //he de diferenciar mediante que namePhoneEmail se logea -> (username, phone o email)
+        if (this.usernameExists) {
+          this.userService.login(namePhoneEmail, password, 1).subscribe({
+            next: (response) => {
+              console.log('response login: ', response);
+              localStorage.setItem('jwt', response.jwt);
+              this.userService.setCurrentUser(response.user);
+            },
+            error: (error) => {
+              console.log('error login: ', error);
+            },
+            complete: () => {
+              console.log('complete login');
+              this.closeDialog();
+              this.router.navigate(['/home']);
+            }
+          });
+        } else if (this.phoneExists) {
+          this.userService.login(namePhoneEmail, password, 2).subscribe({
+            next: (response) => {
+              console.log('response login: ', response);
+              localStorage.setItem('jwt', response.jwt);
+              this.userService.setCurrentUser(response.user);
+            },
+            error: (error) => {
+              console.log('error login: ', error);
+            },
+            complete: () => {
+              console.log('complete login');
+              this.closeDialog();
+              this.router.navigate(['/home']);
+            }
+          });
+        } else if (this.emailExists) {
+          this.userService.login(namePhoneEmail, password, 3).subscribe({
+            next: (response) => {
+              console.log('response login: ', response);
+              localStorage.setItem('jwt', response.jwt);
+              this.userService.setCurrentUser(response.user);
+            },
+            error: (error) => {
+              console.log('error login: ', error);
+            },
+            complete: () => {
+              console.log('complete login');
+              this.closeDialog();
+              this.router.navigate(['/home']);
+            }
+          });
+        }
+
       } else {
         console.log("Formulario no valido");
       }
@@ -67,34 +122,31 @@ export class LoginComponent {
     console.log('valor del campo acceso -> ', namePhoneEmailValue);
 
     if (firstPart?.valid) {
-      const usernameExists = await firstValueFrom(this.checkUsername(namePhoneEmailValue));
-      if (usernameExists) {
-        console.log("Este username existe en la bd");
+      this.usernameExists = await firstValueFrom(this.checkUsername(namePhoneEmailValue));
+      if (this.usernameExists) {
+        console.log("checkUsername() - OK - Este username existe en la bd");
         this.formLogin.get('secondPart.namePhoneEmail2')?.setValue(namePhoneEmailValue);
         this.showSecondPart = true;
-      }else{
+      } else {
         this.usernameNotExists = true;
-        console.log('Este username no existe en la bd');
       }
 
-      const phoneExists = await firstValueFrom(this.checkPhone(namePhoneEmailValue));
-      if (phoneExists) {
-        console.log('Este phone existe en la bd');
+      this.phoneExists = await firstValueFrom(this.checkPhone(namePhoneEmailValue));
+      if (this.phoneExists) {
+        console.log('checkPhone() - OK - Este phone existe en la bd');
         this.formLogin.get('secondPart.namePhoneEmail2')?.setValue(namePhoneEmailValue);
         this.showSecondPart = true;
-      }else{
+      } else {
         this.phoneNotExists = true;
-        console.log('Este phone no existe en la bd');
       }
 
-      const emailExists = await firstValueFrom(this.checkEmail(namePhoneEmailValue));
-      if (emailExists) {
-        console.log('Este email existe en la bd');
+      this.emailExists = await firstValueFrom(this.checkEmail(namePhoneEmailValue));
+      if (this.emailExists) {
+        console.log('checkEmail() - OK - Este email existe en la bd');
         this.formLogin.get('secondPart.namePhoneEmail2')?.setValue(namePhoneEmailValue);
         this.showSecondPart = true;
-      }else{
+      } else {
         this.emailNotExists = true;
-        console.log('Este email no existe en la bd');
       }
     }
   }
@@ -110,7 +162,8 @@ export class LoginComponent {
         return of(false);
       })
     );
-  }
+  } // Add closing parenthesis and semicolon here
+
   private checkPhone(phone: string): Observable<boolean> {
     return this.userService.getUserByPhone(phone).pipe(
       map(user => {

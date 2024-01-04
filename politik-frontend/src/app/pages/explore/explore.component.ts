@@ -1,7 +1,5 @@
 import { UserService } from './../../services/user/user.service';
 import { Component, ElementRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -33,7 +31,6 @@ export class ExploreComponent {
     if (value == "" || value == null) {
       this.filteredUsers = [];
     }
-    console.log('Resultados de búsqueda:', this.filteredUsers);
   }
 
   getUsers() {

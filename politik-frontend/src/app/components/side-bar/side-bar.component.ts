@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/services/user/user.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,22 @@ import { Component } from '@angular/core';
 })
 export class SideBarComponent {
 
+  public username: string = '';
+  public name: string = '';
+  public lastname: string = '';
+
+  constructor(private userService: UserService) { }
+
+  ngOnInit() {
+    const user = this.userService.getCurrentUser();
+    if (user) {
+      this.username = user.username;
+      this.name = user.name;
+      this.lastname = user.lastname;
+    }
+  }
+
+  logout() {
+    this.userService.logout();
+  }
 }

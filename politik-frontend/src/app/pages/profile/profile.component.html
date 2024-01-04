@@ -4,7 +4,7 @@
     <header>
       <button class="btn"><i class="fa-solid fa-arrow-left"></i></button>
       <div>
-        <h2>Name</h2>
+        <h2>{{name}}</h2>
         <h4>333 posts</h4>
       </div>
     </header>
@@ -19,11 +19,11 @@
         <button class="btn btn-dark">Editar perfil</button>
       </div>
       <div id="data">
-        <div id="name">Name name</div>
-        <div id="username">@username</div>
+        <div id="name">{{name}} {{lastname}}</div>
+        <div id="username">@{{username}}</div>
         <div id="bio">Entusiasmo es mi palabra favorita. Peleo por mantener el Alma de niño. Creo que la vida es un Milagro y un Misterio.</div>
         <div id="dates">
-          <div id="birthday"><i class="fa-solid fa-cake-candles"></i> Nacido September 30, 1995</div>
+          <div id="birthday"><i class="fa-solid fa-cake-candles"></i> {{birthday}}</div>
           <div id="created"><i class="fa-solid fa-calendar-days"></i> Se unió March 2020</div>
         </div>
         <div id="followers">
@@ -55,7 +55,18 @@
     </div>
   </div>
   <div id="rightBar" #rightBar>
-    <app-search-bar></app-search-bar>
+    <app-search-bar (search)="observerChangeSearch($event)"></app-search-bar>
+    <div id="results" *ngIf="filteredUsers.length != 0">
+      <div id="user" *ngFor="let user of filteredUsers" [routerLink]="['/profile', user.username]">
+        <div id="imgUser">
+          <img src="https://i.pravatar.cc/300" alt="profile photo" width="60" height="60" class="rounded-circle me-4">
+        </div>
+        <div id="username">
+          <div class="name"><h5>{{user.name}} {{user.lastname}}</h5></div>
+          <div><h5>@{{user.username}}</h5></div>
+        </div>
+      </div>
+    </div>
     <app-suggestions></app-suggestions>
   </div>
 </div>

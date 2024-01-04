@@ -13,10 +13,11 @@ const routes: Routes = [
   { path: 'start', component: StartComponent },
   { path: 'landing', component: LandingComponent },
   { path: 'signup', component: SignupComponent },
-  {path: 'home', component: HomeComponent },
-  {path: 'explore', component: ExploreComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'explore', component: ExploreComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'users', component: ListOfUsersComponent },
+  { path: 'list', component: ListOfUsersComponent },
 ];
 
 @NgModule({

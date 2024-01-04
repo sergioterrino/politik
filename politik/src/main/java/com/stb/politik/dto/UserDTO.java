@@ -1,4 +1,4 @@
-package com.stb.politik.user;
+package com.stb.politik.dto;
 
 import java.sql.Date;
 

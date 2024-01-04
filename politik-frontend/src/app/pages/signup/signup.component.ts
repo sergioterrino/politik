@@ -75,6 +75,7 @@ export class SignupComponent {
           next: (response: any) => {
             console.log(response);
             console.log("Formulario válido");
+            localStorage.setItem('jwt', response.jwt);
           },
           error: (error: any) => {
             console.log("Formulario no valido al mandar los datos al backend");
