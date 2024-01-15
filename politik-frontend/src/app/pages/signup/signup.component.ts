@@ -12,7 +12,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class SignupComponent {
 
-  role: string;
+  rol: string;
   showUseEmailDiv = false; //True -> si el usuario pulsa el btn usar el email para registrarse
   showSecondPart = false; //True -> sí no existe un usuario con ese phone, email or username
 
@@ -31,7 +31,7 @@ export class SignupComponent {
     private userService: UserService,
     private formBuilder: FormBuilder,
   ) {
-    this.role = data.role; // recibe el role del landing.component.ts
+    this.rol = data.rol; // recibe el rol del landing.component.ts
   }
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class SignupComponent {
         //creo el objeto userDTO para enviarlo al backend
         this.userDTO = {
           username: formSignup.get('secondPart')?.get('username')?.value,
-          role: this.role,
+          rol: this.rol,
           name: formSignup.get('firstPart')?.get('name')?.value,
           lastname: formSignup.get('firstPart')?.get('lastname')?.value,
           phone: formSignup.get('firstPart')?.get('phone')?.value,
@@ -75,7 +75,8 @@ export class SignupComponent {
           next: (response: any) => {
             console.log(response);
             console.log("Formulario válido");
-            localStorage.setItem('jwt', response.jwt);
+            // localStorage.setItem('jwt', response.jwt);
+            this.userService.setCurrentUser(response.user);
           },
           error: (error: any) => {
             console.log("Formulario no valido al mandar los datos al backend");
@@ -136,7 +137,7 @@ export class SignupComponent {
         else return false;
       }),
       catchError(error => {
-        console.error('Error: checkPhone() ', error);
+        console.error('Error: checkPhone() - ya existe en la db ', error);
         return of(false);
       })
     );
@@ -150,7 +151,7 @@ export class SignupComponent {
         else return false;
       }),
       catchError(error => {
-        console.log("Error: checkEmail() ", error);
+        console.log("Error: checkEmail() - ya existe en la db ", error);
         return of(false);
       })
     );

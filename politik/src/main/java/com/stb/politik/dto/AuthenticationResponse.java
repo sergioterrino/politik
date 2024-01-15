@@ -11,6 +11,9 @@ public class AuthenticationResponse {
         this.jwt = jwt;
         this.user = user;
     }
+    public AuthenticationResponse (User user) {
+        this.user = user;
+    }
 
     public String getJwt() {
         return jwt;

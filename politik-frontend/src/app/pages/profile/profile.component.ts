@@ -1,7 +1,7 @@
 import { UserService } from 'src/app/services/user/user.service';
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +18,7 @@ export class ProfileComponent {
   public name: string = '';
   public lastname: string = '';
   public birthday: string = '';
+  public createdAt: string = '';
 
   //para la searchBar
   users: User[] = [];
@@ -29,6 +30,8 @@ export class ProfileComponent {
     this.getUsers(); //traigo todos los users para la searchBar
     this.filteredUsers = [];
     const user = this.userService.getCurrentUser();
+    console.log('profile.ts - ngOnInit() - user.getCurrentUser() ', user.birthday);
+    console.log('profile.ts - ngOnInit() - user.getCurrentUser() ', user.createdAt);
     if (user) {
       this.username = user.username;
       this.name = user.name;
@@ -36,6 +39,8 @@ export class ProfileComponent {
       if (user.birthday) {
         this.birthday = this.datePipe.transform(user.birthday, 'MMMM d, y') || '';
       }
+      this.createdAt = this.datePipe.transform(user.createdAt, 'MMMM, y') || '';
+      console.log('profile.ts - ngOnInit() - createdAt', this.createdAt);
     }
   }
 

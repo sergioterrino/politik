@@ -1,6 +1,12 @@
 package com.stb.politik.user;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stb.politik.credentials.Credentials;
+import com.stb.politik.post.Post;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -8,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -25,8 +32,8 @@ public class User {
     @Column(name = "username", unique = true, nullable = false, length = 25)
     private String username;
 
-    @Column(name = "role", nullable = false, length = 7)
-    private String role;
+    @Column(name = "rol", nullable = false, length = 7)
+    private String rol;
 
     @Column(name = "name", nullable = false, length = 25)
     private String name;
@@ -40,13 +47,26 @@ public class User {
     @Column(name = "email", unique = true, nullable = true, length = 50)
     private String email;
 
-    @Column(name = "created_at", nullable = true, length = 15)
-    private String created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "birthday", nullable = false, length = 15)
-    private String birthday;
+    @Column(name = "birthday", nullable = false)
+    private LocalDate birthday;
 
-    @Column(name = "dni", nullable = true, length = 9)
+    @Column(name = "dni", length = 9)
     private String dni;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Credentials credentials;
+
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", username=" + username + ", rol=" + rol + ", name=" + name + ", lastname="
+                + lastname + ", phone=" + phone + ", email=" + email + ", createdAt=" + createdAt + ", birthday="
+                + birthday + ", dni=" + dni + "]";
+    }
 }

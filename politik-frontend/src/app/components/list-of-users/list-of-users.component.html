@@ -3,7 +3,7 @@
   <thead class="table-dark">
     <tr>
       <th>Username</th>
-      <th>Role</th>
+      <th>Rol</th>
       <th>Name</th>
       <th>Lastname</th>
       <th>Phone</th>
@@ -16,12 +16,12 @@
   <tbody>
     <tr *ngFor="let user of users">
       <td>{{ user.username }}</td>
-      <td>{{ user.role }}</td>
+      <td>{{ user.rol }}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.lastname }}</td>
       <td>{{ user.phone }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.created_at }}</td>
+      <td>{{ user.createdAt }}</td>
       <td>{{ user.birthday }}</td>
       <td>{{ user.dni }}</td>
       <!-- <td>

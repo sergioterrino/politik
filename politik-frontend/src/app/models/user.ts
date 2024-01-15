@@ -2,13 +2,13 @@ export class User {
 
   userId!: number;
   username!: string;
-  role!: string;
+  rol!: string;
   phone!: string;
   email!: string;
   name!: string;
   lastname!: string;
   birthday!: string;
-  created_at!: string;
+  createdAt!: string;
   dni!: string;
 
 }

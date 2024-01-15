@@ -1,6 +1,6 @@
 import { UserService } from './../../services/user/user.service';
 import { Component, ElementRef } from '@angular/core';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-explore',

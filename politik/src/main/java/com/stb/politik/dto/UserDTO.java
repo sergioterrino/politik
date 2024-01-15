@@ -1,16 +1,16 @@
 package com.stb.politik.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class UserDTO {
     private String username;
-    private String role;
+    private String rol;
     private String name;
     private String lastname;
     private String phone;
     private String email;
-    // private Date created_at; -------------------------------falta implementar
-    private String birthday;
+    private LocalDate createdAt;
+    private LocalDate birthday;
     private String password;
     //private String dni; -------------------------------falta implementar
 
@@ -21,11 +21,11 @@ public class UserDTO {
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getRole() {
-        return role;
+    public String getRol() {
+        return rol;
     }
-    public void setRole(String role) {
-        this.role = role;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
     public String getName() {
         return name;
@@ -51,11 +51,17 @@ public class UserDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
-    public void setBirthday(String birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
     public String getPassword() {
         return password;
@@ -63,6 +69,5 @@ public class UserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-
     
 }

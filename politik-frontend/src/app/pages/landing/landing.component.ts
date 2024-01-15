@@ -18,21 +18,21 @@ export class LandingComponent {
     ) { }
 
     ngAfterViewInit() {
-      const politicRole = this.el.nativeElement.querySelector('#btnL');
-      const citizenRole = this.el.nativeElement.querySelector('#btnR');
+      const politicRol = this.el.nativeElement.querySelector('#btnL');
+      const citizenRol = this.el.nativeElement.querySelector('#btnR');
 
-      this.renderer.listen(politicRole, 'click', () => {
+      this.renderer.listen(politicRol, 'click', () => {
         this.openDialogSignup('politic');
       });
 
-      this.renderer.listen(citizenRole, 'click', () => {
+      this.renderer.listen(citizenRol, 'click', () => {
         this.openDialogSignup('citizen');
       });
     }
 
-    openDialogSignup(role: string) {
+    openDialogSignup(rol: string) {
       this.dialog.open(SignupComponent, {
-        data: { role: role },
+        data: { rol: rol },
         width: '40%',
         height: '90%'
       });
@@ -45,19 +45,19 @@ export class LandingComponent {
 
   // esto es sin modal
   // ngAfterViewInit() {
-  //   const politicRole = this.el.nativeElement.querySelector('#btnL');
-  //   const citizenRole = this.el.nativeElement.querySelector('#btnR');
+  //   const politicRol = this.el.nativeElement.querySelector('#btnL');
+  //   const citizenRol = this.el.nativeElement.querySelector('#btnR');
 
-  //   this.renderer.listen(politicRole, 'click', () => {
+  //   this.renderer.listen(politicRol, 'click', () => {
   //     this.navigateToSignup('politic');
   //   });
 
-  //   this.renderer.listen(citizenRole, 'click', () => {
+  //   this.renderer.listen(citizenRol, 'click', () => {
   //     this.navigateToSignup('citizen');
   //   });
   // }
 
-  // navigateToSignup(role: string) {
-  //   this.router.navigate(['/signup'], { queryParams: { role: role } });
+  // navigateToSignup(rol: string) {
+  //   this.router.navigate(['/signup'], { queryParams: { rol: rol } });
   // }
 }

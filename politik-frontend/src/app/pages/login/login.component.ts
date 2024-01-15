@@ -5,6 +5,7 @@ import { ForgotPasswordComponent } from '../forgot-password/forgot-password.comp
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, catchError, map, of, firstValueFrom } from 'rxjs';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-login',
@@ -18,9 +19,9 @@ export class LoginComponent {
   formLogin!: FormGroup;
 
   //para las peticiones al backend, si encuentra un usuario con ese phone, email or username -> true exists
-  phoneExists: boolean = false; //True -> si el teléfono existe en la base de datos
-  usernameExists: boolean = false; //True -> si el username existe en la base de datos
-  emailExists: boolean = false; //True -> si el email existe en la base de datos
+  phoneExists!: User | null; //True -> si el teléfono existe en la base de datos
+  usernameExists!: User | null; //True -> si el username existe en la base de datos
+  emailExists!: User | null; //True -> si el email existe en la base de datos
 
   usernameNotExists: boolean = false; //Por default, siempre existe el usuario, para que no salga el error-message
   phoneNotExists: boolean = false; //True -> si el teléfono no existe en la base de datos
@@ -60,11 +61,18 @@ export class LoginComponent {
         //he de enviar el namePhoneEmail y el password al backend. Checkear si para dicho user, el password es correcto
         //he de diferenciar mediante que namePhoneEmail se logea -> (username, phone o email)
         if (this.usernameExists) {
-          this.userService.login(namePhoneEmail, password, 1).subscribe({
+          //antes de hacer el login(), como ya he comprobado que existe el usuario con dich username
+          //Ahora voy a obtener el username del user. En este caso es fácil. Pero si fuera phone o email?
+          const username = this.usernameExists.username;
+          this.userService.login(username, password).subscribe({
             next: (response) => {
               console.log('response login: ', response);
-              localStorage.setItem('jwt', response.jwt);
-              this.userService.setCurrentUser(response.user);
+              // localStorage.setItem('jwt', response.jwt);
+              if (this.usernameExists) {this.userService.setCurrentUser(this.usernameExists);
+                console.log(this.usernameExists);
+              console.log("login.ts - onSubmit() - this.usernameExists.createdAt ", this.usernameExists.createdAt);
+              console.log("login.ts - onSubmit() - this.userService.getCurrentUser().createdAt ", this.userService.getCurrentUser().createdAt);
+              }
             },
             error: (error) => {
               console.log('error login: ', error);
@@ -76,11 +84,12 @@ export class LoginComponent {
             }
           });
         } else if (this.phoneExists) {
-          this.userService.login(namePhoneEmail, password, 2).subscribe({
+          const username = this.phoneExists.username;
+          this.userService.login(username, password).subscribe({
             next: (response) => {
               console.log('response login: ', response);
-              localStorage.setItem('jwt', response.jwt);
-              this.userService.setCurrentUser(response.user);
+              // localStorage.setItem('jwt', response.jwt);
+              if (this.phoneExists) this.userService.setCurrentUser(this.phoneExists);
             },
             error: (error) => {
               console.log('error login: ', error);
@@ -92,11 +101,12 @@ export class LoginComponent {
             }
           });
         } else if (this.emailExists) {
-          this.userService.login(namePhoneEmail, password, 3).subscribe({
+          const username = this.emailExists.username;
+          this.userService.login(username, password).subscribe({
             next: (response) => {
               console.log('response login: ', response);
-              localStorage.setItem('jwt', response.jwt);
-              this.userService.setCurrentUser(response.user);
+              // localStorage.setItem('jwt', response.jwt);
+              if (this.emailExists) this.userService.setCurrentUser(this.emailExists);
             },
             error: (error) => {
               console.log('error login: ', error);
@@ -129,62 +139,62 @@ export class LoginComponent {
         this.showSecondPart = true;
       } else {
         this.usernameNotExists = true;
-      }
 
-      this.phoneExists = await firstValueFrom(this.checkPhone(namePhoneEmailValue));
-      if (this.phoneExists) {
-        console.log('checkPhone() - OK - Este phone existe en la bd');
-        this.formLogin.get('secondPart.namePhoneEmail2')?.setValue(namePhoneEmailValue);
-        this.showSecondPart = true;
-      } else {
-        this.phoneNotExists = true;
-      }
+        this.phoneExists = await firstValueFrom(this.checkPhone(namePhoneEmailValue));
+        if (this.phoneExists) {
+          console.log('checkPhone() - OK - Este phone existe en la bd');
+          this.formLogin.get('secondPart.namePhoneEmail2')?.setValue(namePhoneEmailValue);
+          this.showSecondPart = true;
+        } else {
+          this.phoneNotExists = true;
 
-      this.emailExists = await firstValueFrom(this.checkEmail(namePhoneEmailValue));
-      if (this.emailExists) {
-        console.log('checkEmail() - OK - Este email existe en la bd');
-        this.formLogin.get('secondPart.namePhoneEmail2')?.setValue(namePhoneEmailValue);
-        this.showSecondPart = true;
-      } else {
-        this.emailNotExists = true;
+          this.emailExists = await firstValueFrom(this.checkEmail(namePhoneEmailValue));
+          if (this.emailExists) {
+            console.log('checkEmail() - OK - Este email existe en la bd');
+            this.formLogin.get('secondPart.namePhoneEmail2')?.setValue(namePhoneEmailValue);
+            this.showSecondPart = true;
+          } else {
+            this.emailNotExists = true;
+          }
+        }
       }
     }
   }
 
-  private checkUsername(username: string): Observable<boolean> {
+  private checkUsername(username: string): Observable<User | null> {
     return this.userService.getUserByUsername(username).pipe(
       map(user => {
-        if (user) return true;
-        else return false;
+        if (user) return user;
+        else throw new Error('User not found');
       }),
       catchError(error => {
-        console.log("error - checkYsername() ", error);
-        return of(false);
+        console.log("error - checkUsername() ", error);
+        return of(null);
       })
     );
   } // Add closing parenthesis and semicolon here
 
-  private checkPhone(phone: string): Observable<boolean> {
+  private checkPhone(phone: string): Observable<User | null> {
     return this.userService.getUserByPhone(phone).pipe(
       map(user => {
-        if (user) return true;
-        else return false;
+        if (user) return user;
+        else throw new Error('User not found');
       }),
       catchError(error => {
         console.error('Error: checkPhone() ', error);
-        return of(false);
+        return of(null);
       })
     );
   }
-  private checkEmail(email: string): Observable<boolean> {
+  private checkEmail(email: string): Observable<User | null> {
     return this.userService.getUserByEmail(email).pipe(
       map(user => {
-        if (user) return true;
-        else return false;
+        if (user) return user;
+        else throw new Error('User not found');
       }),
       catchError(error => {
         console.log("Error: checkEmail() ", error);
-        return of(false);
+        return of(null);
       })
     );
   }
