@@ -46,6 +46,12 @@
           }
         }
 
+        #date {
+          color: rgb(122, 122, 122);
+          font-size: 0.93em;
+          height: 55%; // para que esté alineado por abajo con lo demás del header
+        }
+
         #btnHeader {
           margin-left: auto; //sería como el justify-self del Grid
 

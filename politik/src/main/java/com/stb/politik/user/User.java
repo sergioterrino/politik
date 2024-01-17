@@ -57,6 +57,7 @@ public class User {
     private String dni;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Post> posts;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

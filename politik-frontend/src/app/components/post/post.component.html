@@ -7,12 +7,12 @@
     </div>
     <div id="data">
       <div id="header">
-        <div id="name"><a routerLink="/profile/username">name</a></div>
-        <div id="username"><a routerLink="/profile/username">@username</a></div>
-        <div id="date">·&nbsp;&nbsp;&nbsp;2h</div>
+        <div id="name"><a routerLink="/profile/username">{{post.name}} {{post.lastname}}</a></div>
+        <div id="username"><a routerLink="/profile/username">@{{post.username}}</a></div>
+        <div id="date">·&nbsp;&nbsp;&nbsp;{{getTimeSincePosted(post.createdAt)}}</div>
         <div id="btnHeader"><button class="btn btn-dark"><i class="fa-solid fa-ellipsis"></i></button></div>
       </div>
-      <div id="text">Este es el texto de mi primer Post, para probar como se vería :P</div>
+      <div id="text">{{post.text}}</div>
       <div id="media">
         <img src="../../../assets/images/fotoPost.jpg" alt="foto Post" height="auto">
       </div>

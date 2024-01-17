@@ -36,9 +36,6 @@ export class UserService {
   }
 
   //mandará el userDTO al userController del backend para que setee los datos y los almacene en la base de datos
-  // signup(userDTO: any): Observable<any> {
-  //   return this.httpClient.post<any>(`${this.baseURL}/signup`, userDTO);
-  // }
   signup(userDTO: any): Observable<any> {
     return this.httpClient.post<any>(`${this.baseURL}/signup`, userDTO, {
       observe: 'response'

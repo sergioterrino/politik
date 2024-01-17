@@ -2,6 +2,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { PostService } from 'src/app/services/post/post.service';
+import { Post } from 'src/app/models/Post';
 
 @Component({
   selector: 'app-home',
@@ -20,12 +21,17 @@ export class HomeComponent {
   imagePath: string = ""; //esto lo obtendré cuando clicken en addImage, aún no sé cómo xd
   videoPath: string = ""; // = que imagePath
 
+
+  //Para la parte de los posts
+  posts: Post[] = []; //Estos son todos los posts existetes, que se mostrarán en el home
+
   constructor(private userService: UserService, private postService: PostService) { }
 
   ngOnInit() {
     this.getUsers();
     this.filteredUsers = [];
     this.currentUser = this.userService.getCurrentUser();
+    this.getPosts();
   }
 
   observerChangeSearch(value: string) {
@@ -65,11 +71,20 @@ export class HomeComponent {
         console.log('Error: onSubmitPost() - error al enviar los datos del post en Frontend', err);
       },
       complete: () => {
-        console.log('Petición completa');
+        console.log('home.ts - createPost() - Petición completa');
       }
     })
 
     console.log('texto escrito en el textarea: ', this.text);
+  }
+
+  //metodo obtener todos los posts de la db
+  getPosts() {
+    this.postService.getAllPosts().subscribe(data => {
+      console.log("home.ts - getPosts() - data", data);
+      this.posts = data;
+      console.log("home.ts - getPosts() - data", this.posts);
+    })
   }
 
 

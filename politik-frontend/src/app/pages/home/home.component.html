@@ -22,7 +22,8 @@
       </div>
     </div>
     <div id="content">
-      <app-posts-profile></app-posts-profile>
+      <app-post *ngFor="let post of posts" [post]="post"></app-post>
+      <!-- <app-posts-profile></app-posts-profile> -->
     </div>
   </div>
   <div id="rightBar">
