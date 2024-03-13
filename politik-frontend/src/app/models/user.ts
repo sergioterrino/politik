@@ -1,6 +1,6 @@
 export class User {
 
-  userId!: number;
+  id!: number;
   username!: string;
   rol!: string;
   phone!: string;

@@ -15,6 +15,7 @@ export class HomeComponent {
   filteredUsers: User[] = [];
 
   currentUser: User = new User(); //para poder obtener el user_id para el postIt()
+  showCreatorPosts: boolean = true; //para mostrar o no el textarea para crear posts
 
   postDTO: any = {};
   text: string = ''; //a través de ngModel obtengo el texro escrito
@@ -31,6 +32,9 @@ export class HomeComponent {
     this.getUsers();
     this.filteredUsers = [];
     this.currentUser = this.userService.getCurrentUser();
+    console.log("home.ts - ngOnInit() - currentUser", this.currentUser);
+    console.log("home.ts - ngOnInit() - currentUser.rol", this.currentUser.rol);
+    if(this.currentUser.rol == "citizen") this.showCreatorPosts = false;
     this.getPosts();
   }
 
@@ -47,6 +51,7 @@ export class HomeComponent {
 
   getUsers() {
     this.userService.getUsersList().subscribe(data => {
+      console.log("home.ts - getUsers() - data", data);
       this.users = data;
     })
   }
@@ -72,6 +77,8 @@ export class HomeComponent {
       },
       complete: () => {
         console.log('home.ts - createPost() - Petición completa');
+        this.text = ''; //limpio el textarea
+        this.getPosts(); //actualizo la lista de posts
       }
     })
 

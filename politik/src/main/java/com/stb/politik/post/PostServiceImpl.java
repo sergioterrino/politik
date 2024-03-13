@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.stb.politik.user.User;
-
 @Service
 public class PostServiceImpl implements PostService{
 
@@ -15,7 +13,7 @@ public class PostServiceImpl implements PostService{
     private PostRepository postRepository;
 
     @Override
-    public List<Post> getAllPosts() {
+    public List<Post> getPosts() {
         return this.postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
@@ -26,8 +24,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<Post> getPostsByUserId(Long userId) {
-        return this.postRepository.findByUser_UserId(userId);
+        return this.postRepository.findByUser_Id(userId);
     }
-
     
 }

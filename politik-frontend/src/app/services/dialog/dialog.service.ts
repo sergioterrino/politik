@@ -1,6 +1,5 @@
 import { MatDialog } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
-import { DialogSignupComponent } from 'src/app/components/dialogs/dialog-signup/dialog-signup.component';
 
 @Injectable({
   providedIn: 'root'

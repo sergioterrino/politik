@@ -37,11 +37,12 @@ export class ProfileComponent {
     this.getUsers(); //traigo todos los users para la searchBar
     this.filteredUsers = [];
     this.user = this.userService.getCurrentUser();
-    console.log('profile.ts - ngOnInit() - user.getCurrentUser() ', this.user.birthday);
-    console.log('profile.ts - ngOnInit() - this.user.getCurrentUser() ', this.user.createdAt);
+    console.log('profile.ts - ngOnInit() - user.getCurrentUser() ', this.user.username);
+    console.log('profile.ts - ngOnInit() - this.user.userId ', this.user.id);
     if (this.user) {
       this.username = this.user.username;
-      this.userId = this.user.userId;
+      this.userId = this.user.id;
+      console.log('profile.ts - ngOnInit() - this.userId ', this.userId);
       this.name = this.user.name;
       this.lastname = this.user.lastname;
       if (this.user.birthday) {

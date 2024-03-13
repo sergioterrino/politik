@@ -8,12 +8,14 @@ import com.stb.politik.user.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -27,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("api/posts")
+@RequestMapping("/api/posts")
 public class PostController {
 
     private static Logger log = LoggerFactory.getLogger(PostController.class.getName());
@@ -39,12 +41,12 @@ public class PostController {
     private UserService userService;
 
     @GetMapping("")
-    public List<Post> getAllPosts() {
-        return this.postService.getAllPosts();
+    public List<Post> getPosts() {
+        return this.postService.getPosts();
     }
 
     @GetMapping("/user/{userId}")
-    public  List<Post> getPostsByUser(@PathVariable Long userId) {
+    public List<Post> getPostsByUser(@PathVariable Long userId) {
         // Obtengo el objeto Authentication deSpring Security
         // Authentication authentication =
         // SecurityContextHolder.getContext().getAuthentication();
@@ -59,7 +61,7 @@ public class PostController {
         // username);
 
         // Busca al usuario en tu base de datos
-        User user = userService.getUserByUserId(userId);
+        User user = userService.getUserById(userId);
         // Verifico si el usuario existe en la base de datos
         if (user != null) {
             List<Post> posts = postService.getPostsByUserId(userId);
@@ -79,9 +81,9 @@ public class PostController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('politik')")
     public ResponseEntity<?> createPost(@RequestBody PostDTO postDTO) {
 
-        log.info("PostController - createPost() - PostDTO recibido: ");
         Post post = new Post();
         post.setText(postDTO.getText());
         post.setImagePath(postDTO.getImagePath());
@@ -89,6 +91,7 @@ public class PostController {
         // establezco la hora
         LocalDateTime currentDate = LocalDateTime.now();
         post.setCreatedAt(currentDate);
+        log.info("PostController - createPost() - PostDTO recibido: - post.toString() -> " + post.toString());
 
         // ahora necesito obtener el user_id del user autenticado
         // Obtengo el objeto Authentication deSpring Security
@@ -101,13 +104,14 @@ public class PostController {
             log.info("PostController - createPost() - Username auth -> " + username);
 
             // Busca al usuario en tu base de datos
-            User user = userService.getUserByUsername(username);
+            Optional<User> optionalUser = userService.getUserByUsername(username);
 
             // Verifico si el usuario existe en la base de datos
-            if (user != null) {
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
                 post.setUser(user);
                 post.setName(user.getName());
-                post.setLastname(user.getUsername());
+                post.setLastname(user.getLastname());
                 post.setUsername(user.getUsername());
                 log.info("PostController - createPost() - Post antes de enviarse" + post.toString());
 

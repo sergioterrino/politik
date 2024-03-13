@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { User } from 'src/app/models/User';
 
 @Injectable({
@@ -47,29 +47,35 @@ export class UserService {
       console.log("user.service.ts - signup() - bearerToken ", bearerToken);
       const jwt = bearerToken.replace('Bearer ', '');
 
-      localStorage.setItem('jwt', jwt );
+      localStorage.setItem('jwt', jwt);
 
       return body;
     }));
   }
 
   //mando al backend el username y el password para que compruebe si es correcto
+  // login(username: string, password: string): Observable<any> {
+  //   return this.httpClient.post<any>(`${this.baseURL}/login`, { username, password }, {
+  //     observe: 'response'
+  //   }).pipe(map((response: HttpResponse<any>) => {
+  //     const body = response.body;
+  //     const headers = response.headers;
+  //     console.log('response.headers -> ', response.headers);
+
+  //     const bearerToken = headers.get('Authorization')!;
+  //     const jwt = bearerToken.replace('Bearer ', '');
+  //     console.log("user.service.ts - login() - jwt ", jwt);
+
+  //     localStorage.setItem('jwt', jwt );
+  //     console.log("user.service.ts - login() -------------------------------us");
+
+  //     return body;
+  //     }));
+  // }
+
   login(username: string, password: string): Observable<any> {
-    return this.httpClient.post<any>(`${this.baseURL}/login`, { username, password }, {
-      observe: 'response'
-    }).pipe(map((response: HttpResponse<any>) => {
-      const body = response.body;
-      const headers = response.headers;
-      console.log('response.headers -> ', response.headers);
-
-      const bearerToken = headers.get('Authorization')!;
-      const jwt = bearerToken.replace('Bearer ', '');
-
-      localStorage.setItem('jwt', jwt );
-      console.log("user.service.ts - login() -------------------------------us");
-
-      return body;
-      }));
+    console.log("user.service.ts - login() -------------------------------us");
+    return this.httpClient.post(`${this.baseURL}/login`, { username, password }, { responseType: 'text' as 'json', observe: 'body' });
   }
 
   getToken() {
@@ -83,6 +89,7 @@ export class UserService {
   logout() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('currentUser');
+    //AQUI CREO QUE ME FALTA EL HACER EL LOGOUT DE LA SESION O DEL USERAUTH. YA QUE SI NO, AUNQUE NO TENGA EL TOKEN, NI USER, PODRIA SEGUIR ACCEDIENDO A LAS PAGINAS PONIENDO /HOME POR EJEMPLO
     this.router.navigate(['/start']);
   }
 

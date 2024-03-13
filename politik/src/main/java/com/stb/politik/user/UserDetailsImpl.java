@@ -1,14 +1,15 @@
-package com.stb.politik.security;
+package com.stb.politik.user;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.stb.politik.user.User;
 
 import lombok.AllArgsConstructor;
 
@@ -19,21 +20,33 @@ public class UserDetailsImpl implements UserDetails {
 
     private User user;
 
+    private String password;
+
+    private String username;
+
+    List<GrantedAuthority> authorities;
+
+    public UserDetailsImpl(User user) {
+        username = user.getUsername();
+        password = user.getPassword();
+        authorities = Arrays.stream(user.getRol().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        log.info("UserDetailsImpl.getPassword() ->" + user.getCredentials().getPasswordHash());
-        return user.getCredentials().getPasswordHash();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        log.info("UserDetailsImpl.getUsername() ->" + user.getUsername());
-        return user.getUsername();
+        return username;
     }
 
     @Override

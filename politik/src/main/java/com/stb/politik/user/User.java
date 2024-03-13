@@ -2,38 +2,33 @@ package com.stb.politik.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.stb.politik.credentials.Credentials;
-import com.stb.politik.post.Post;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
     @Column(name = "username", unique = true, nullable = false, length = 25)
     private String username;
 
-    @Column(name = "rol", nullable = false, length = 7)
-    private String rol;
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
 
     @Column(name = "name", nullable = false, length = 25)
     private String name;
@@ -50,23 +45,17 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "birthday", nullable = false)
+    @Column(name = "birthday", nullable = true)
     private LocalDate birthday;
 
     @Column(name = "dni", length = 9)
     private String dni;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Post> posts;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Credentials credentials;
+    private String rol;
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", username=" + username + ", rol=" + rol + ", name=" + name + ", lastname="
+        return "User [Id=" + id + ", username=" + username + ", rol=" + rol + ", name=" + name + ", lastname="
                 + lastname + ", phone=" + phone + ", email=" + email + ", createdAt=" + createdAt + ", birthday="
                 + birthday + ", dni=" + dni + "]";
     }

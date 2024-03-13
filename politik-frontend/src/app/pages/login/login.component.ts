@@ -52,6 +52,7 @@ export class LoginComponent {
     })
   }
 
+
   onSubmit(formLogin: FormGroup) {
     if (this.showSecondPart) {
       const secondPart = formLogin.get('secondPart');
@@ -65,17 +66,16 @@ export class LoginComponent {
           //Ahora voy a obtener el username del user. En este caso es fácil. Pero si fuera phone o email?
           const username = this.usernameExists.username;
           this.userService.login(username, password).subscribe({
-            next: (response) => {
-              console.log('response login: ', response);
-              // localStorage.setItem('jwt', response.jwt);
-              if (this.usernameExists) {this.userService.setCurrentUser(this.usernameExists);
+            next: (jwt: string) => {
+              console.log('login.ts - onSubmit() - jwt: ', jwt);
+              localStorage.setItem('jwt', jwt);
+              if (this.usernameExists) {
+                this.userService.setCurrentUser(this.usernameExists);
                 console.log(this.usernameExists);
-              console.log("login.ts - onSubmit() - this.usernameExists.createdAt ", this.usernameExists.createdAt);
-              console.log("login.ts - onSubmit() - this.userService.getCurrentUser().createdAt ", this.userService.getCurrentUser().createdAt);
               }
             },
             error: (error) => {
-              console.log('error login: ', error);
+              console.log('login.component.ts - onSubmit() - if this.username - error login: ', error);
             },
             complete: () => {
               console.log('complete login');
@@ -86,9 +86,9 @@ export class LoginComponent {
         } else if (this.phoneExists) {
           const username = this.phoneExists.username;
           this.userService.login(username, password).subscribe({
-            next: (response) => {
-              console.log('response login: ', response);
-              // localStorage.setItem('jwt', response.jwt);
+            next: (jwt: string) => {
+              console.log('login.ts - onSubmit() - jwt: ', jwt);
+              localStorage.setItem('jwt', jwt);
               if (this.phoneExists) this.userService.setCurrentUser(this.phoneExists);
             },
             error: (error) => {
@@ -103,9 +103,9 @@ export class LoginComponent {
         } else if (this.emailExists) {
           const username = this.emailExists.username;
           this.userService.login(username, password).subscribe({
-            next: (response) => {
-              console.log('response login: ', response);
-              // localStorage.setItem('jwt', response.jwt);
+            next: (jwt: string) => {
+              console.log('login.ts - onSubmit() - jwt: ', jwt);
+              localStorage.setItem('jwt', jwt);
               if (this.emailExists) this.userService.setCurrentUser(this.emailExists);
             },
             error: (error) => {
@@ -125,11 +125,85 @@ export class LoginComponent {
     }
   }
 
+
+  // onSubmit(formLogin: FormGroup) {
+  //   if (this.showSecondPart) {
+  //     const secondPart = formLogin.get('secondPart');
+  //     if (secondPart?.valid) {
+  //       const namePhoneEmail = formLogin.get('secondPart.namePhoneEmail2')?.value;
+  //       const password = formLogin.get('secondPart.password')?.value;
+  //       //he de enviar el namePhoneEmail y el password al backend. Checkear si para dicho user, el password es correcto
+  //       //he de diferenciar mediante que namePhoneEmail se logea -> (username, phone o email)
+  //       if (this.usernameExists) {
+  //         //antes de hacer el login(), como ya he comprobado que existe el usuario con dich username
+  //         //Ahora voy a obtener el username del user. En este caso es fácil. Pero si fuera phone o email?
+  //         const username = this.usernameExists.username;
+  //         this.userService.login(username, password).subscribe({
+  //           next: (response) => {
+  //             console.log('response login: ', response);
+  //             // localStorage.setItem('jwt', response.jwt);
+  //             if (this.usernameExists) {this.userService.setCurrentUser(this.usernameExists);
+  //               console.log(this.usernameExists);
+  //             console.log("login.ts - onSubmit() - this.usernameExists.createdAt ", this.usernameExists.createdAt);
+  //             console.log("login.ts - onSubmit() - this.userService.getCurrentUser().createdAt ", this.userService.getCurrentUser().createdAt);
+  //             }
+  //           },
+  //           error: (error) => {
+  //             console.log('error login: ', error);
+  //           },
+  //           complete: () => {
+  //             console.log('complete login');
+  //             this.closeDialog();
+  //             this.router.navigate(['/home']);
+  //           }
+  //         });
+  //       } else if (this.phoneExists) {
+  //         const username = this.phoneExists.username;
+  //         this.userService.login(username, password).subscribe({
+  //           next: (response) => {
+  //             console.log('response login: ', response);
+  //             // localStorage.setItem('jwt', response.jwt);
+  //             if (this.phoneExists) this.userService.setCurrentUser(this.phoneExists);
+  //           },
+  //           error: (error) => {
+  //             console.log('error login: ', error);
+  //           },
+  //           complete: () => {
+  //             console.log('complete login');
+  //             this.closeDialog();
+  //             this.router.navigate(['/home']);
+  //           }
+  //         });
+  //       } else if (this.emailExists) {
+  //         const username = this.emailExists.username;
+  //         this.userService.login(username, password).subscribe({
+  //           next: (response) => {
+  //             console.log('response login: ', response);
+  //             // localStorage.setItem('jwt', response.jwt);
+  //             if (this.emailExists) this.userService.setCurrentUser(this.emailExists);
+  //           },
+  //           error: (error) => {
+  //             console.log('error login: ', error);
+  //           },
+  //           complete: () => {
+  //             console.log('complete login');
+  //             this.closeDialog();
+  //             this.router.navigate(['/home']);
+  //           }
+  //         });
+  //       }
+
+  //     } else {
+  //       console.log("Formulario no valido");
+  //     }
+  //   }
+  // }
+
   async checkUser() {
     const firstPart = this.formLogin.get('firstPart');
     const namePhoneEmailValue = this.formLogin.get('firstPart.namePhoneEmail')?.value;
 
-    console.log('valor del campo acceso -> ', namePhoneEmailValue);
+    console.log('CheckUser() - valor del campo acceso -> ', namePhoneEmailValue);
 
     if (firstPart?.valid) {
       this.usernameExists = await firstValueFrom(this.checkUsername(namePhoneEmailValue));
@@ -165,7 +239,7 @@ export class LoginComponent {
     return this.userService.getUserByUsername(username).pipe(
       map(user => {
         if (user) return user;
-        else throw new Error('User not found');
+        else return null;
       }),
       catchError(error => {
         console.log("error - checkUsername() ", error);
@@ -178,7 +252,8 @@ export class LoginComponent {
     return this.userService.getUserByPhone(phone).pipe(
       map(user => {
         if (user) return user;
-        else throw new Error('User not found');
+        else return null;
+        // else throw new Error('User not found byPhone');
       }),
       catchError(error => {
         console.error('Error: checkPhone() ', error);
@@ -190,7 +265,7 @@ export class LoginComponent {
     return this.userService.getUserByEmail(email).pipe(
       map(user => {
         if (user) return user;
-        else throw new Error('User not found');
+        else return null;
       }),
       catchError(error => {
         console.log("Error: checkEmail() ", error);

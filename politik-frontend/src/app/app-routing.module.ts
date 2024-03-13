@@ -8,18 +8,19 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './guards/auth.guards';
 
 const routes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
   { path: 'start', component: StartComponent },
-  { path: 'landing', component: LandingComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'explore', component: ExploreComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'users', component: ListOfUsersComponent },
-  { path: 'list', component: ListOfUsersComponent },
+  { path: 'landing', component: LandingComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'explore', component: ExploreComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: ListOfUsersComponent, canActivate: [AuthGuard] },
+  { path: 'list', component: ListOfUsersComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
