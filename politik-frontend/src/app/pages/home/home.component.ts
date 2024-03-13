@@ -1,5 +1,5 @@
 import { UserService } from 'src/app/services/user/user.service';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { PostService } from 'src/app/services/post/post.service';
 import { Post } from 'src/app/models/Post';
@@ -21,7 +21,7 @@ export class HomeComponent {
   text: string = ''; //a través de ngModel obtengo el texro escrito
   imagePath: string = ""; //esto lo obtendré cuando clicken en addImage, aún no sé cómo xd
   videoPath: string = ""; // = que imagePath
-
+  @ViewChild('myTextarea') myTextarea!: ElementRef; //para obtener el elemento <textarea> y limpiar el texto después de crear el post
 
   //Para la parte de los posts
   posts: Post[] = []; //Estos son todos los posts existetes, que se mostrarán en el home
@@ -34,15 +34,20 @@ export class HomeComponent {
     this.currentUser = this.userService.getCurrentUser();
     console.log("home.ts - ngOnInit() - currentUser", this.currentUser);
     console.log("home.ts - ngOnInit() - currentUser.rol", this.currentUser.rol);
-    if(this.currentUser.rol == "citizen") this.showCreatorPosts = false;
+    if (this.currentUser.rol == "citizen") this.showCreatorPosts = false;
     this.getPosts();
+    
+    // me suscribo al Subject postDeleted para que cuando se elimine un post, se actualice la lista de posts
+    this.postService.postDeleted.subscribe(() => {
+      this.getPosts();
+    });
   }
 
   observerChangeSearch(value: string) {
     value = value.toLowerCase();
     this.filteredUsers = this.users.filter(user =>
       user.username.toLowerCase().startsWith(value) || user.name.toLowerCase().startsWith(value) ||
-        user.lastname.toLowerCase().startsWith(value)
+      user.lastname.toLowerCase().startsWith(value)
     );
     if (value == "" || value == null) {
       this.filteredUsers = [];
@@ -72,12 +77,13 @@ export class HomeComponent {
       next: (response: any) => {
         console.log('response home.ts onSubmitPost() -> ', response);
       },
-      error: (err : any) => {
+      error: (err: any) => {
         console.log('Error: onSubmitPost() - error al enviar los datos del post en Frontend', err);
       },
       complete: () => {
         console.log('home.ts - createPost() - Petición completa');
-        this.text = ''; //limpio el textarea
+        this.text = ''; //limpio el textarea (ngModel)
+        this.myTextarea.nativeElement.value = ''; //limpio el textarea (sin ngModel)
         this.getPosts(); //actualizo la lista de posts
       }
     })
@@ -87,16 +93,18 @@ export class HomeComponent {
 
   //metodo obtener todos los posts de la db
   getPosts() {
-    this.postService.getAllPosts().subscribe(data => {
+    this.postService.getPosts().subscribe(data => {
       console.log("home.ts - getPosts() - data", data);
       this.posts = data;
       console.log("home.ts - getPosts() - data", this.posts);
     })
   }
 
+  // setea el texto a guardar en la db con lo que haya en textarea
+  onInput(event: any): void {
+    this.text = event.target.value; // obtiene el texto escrito en el textarea
 
-  //ajusta la altura del textarea cuando hay más de una línea
-  adjustTextarea(event: any): void {
+    //ajusta la altura del textarea cuando hay más de una línea
     let textarea: any = event.target; //obtiene el elemento <textarea>
     textarea.style.overflow = 'hidden';
     textarea.style.height = 'auto'; //el textarea cambia de tamaño para ajustarse al contenido

@@ -82,9 +82,6 @@ export class UserService {
     return localStorage.getItem('token');
   }
 
-
-
-
   //cerrar sesion -> borro el token del localStorage y redirijo a start.page
   logout() {
     localStorage.removeItem('jwt');

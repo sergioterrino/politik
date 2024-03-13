@@ -1,5 +1,7 @@
 import { UserService } from 'src/app/services/user/user.service';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalCreatePostComponent } from '../modal-create-post/modal-create-post.component';
 
 @Component({
   selector: 'app-side-bar',
@@ -12,7 +14,7 @@ export class SideBarComponent {
   public name: string = '';
   public lastname: string = '';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private dialog: MatDialog) { }
 
   ngOnInit() {
     const user = this.userService.getCurrentUser();
@@ -25,5 +27,12 @@ export class SideBarComponent {
 
   logout() {
     this.userService.logout();
+  }
+
+  openDialogCreatePost() {
+    this.dialog.open(ModalCreatePostComponent, {
+      width: '55%',
+      height: '40%',
+    });
   }
 }

@@ -7,7 +7,7 @@
       </div>
       <div id="panel">
         <div id="text">
-          <textarea placeholder="What is happening ?" [(ngModel)]="text" (input)="adjustTextarea($event)"></textarea>
+          <textarea placeholder="What is happening ?" #myTextarea (input)="onInput($event)"></textarea>
         </div>
         <div id="btns">
           <nav class="navbar">

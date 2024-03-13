@@ -21,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,19 +48,6 @@ public class PostController {
 
     @GetMapping("/user/{userId}")
     public List<Post> getPostsByUser(@PathVariable Long userId) {
-        // Obtengo el objeto Authentication deSpring Security
-        // Authentication authentication =
-        // SecurityContextHolder.getContext().getAuthentication();
-        // log.info("PostController - getAllPostsByUser() - Authentication -> " +
-        // authentication.toString());
-        // // Verifico si el usuario está autenticado
-        // if (authentication.isAuthenticated() && !(authentication instanceof
-        // AnonymousAuthenticationToken)) {
-        // // Obtengo el nombre de usuario del objeto Authentication
-        // String username = authentication.getName();
-        // log.info("PostController - getAllPostsByUser() - Username auth -> " +
-        // username);
-
         // Busca al usuario en tu base de datos
         User user = userService.getUserById(userId);
         // Verifico si el usuario existe en la base de datos
@@ -72,16 +60,10 @@ public class PostController {
             // Lanzo una excepción si el usuario no se encuentra en la base de datos
             throw new UsernameNotFoundException("User not found");
         }
-        // } else {
-        // log.info("User not authenticated----------------");
-        // // Lanzo una excepción si el usuario no está autenticado
-        // throw new AuthenticationCredentialsNotFoundException("User not
-        // authenticated");
-        // }
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('politik')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('politik')")
     public ResponseEntity<?> createPost(@RequestBody PostDTO postDTO) {
 
         Post post = new Post();
@@ -130,36 +112,32 @@ public class PostController {
         }
     }
 
-    // @PostMapping("/posts/create")
-    // public ResponseEntity<?> createPost(@RequestBody PostDTO postDTO) {
+    @DeleteMapping("/delete/{postId}")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('politik')")
+    public ResponseEntity<?> deletePost(@PathVariable Long postId) {
+        log.info("PostController - deletePost() - postId" + postId);
+        // Busco el post en la db
+        Post post = postService.getPostById(postId);
+        log.info("PostController - deletePost() - post" + post);
 
-    // log.info("PostDTO recibido: ");
-    // Post post = new Post();
-    // post.setText(postDTO.getText());
-    // post.setImagePath(postDTO.getImagePath());
-    // post.setVideoPath(postDTO.getVideoPath());
-    // // establezco la hora
-    // LocalDateTime currentDate = LocalDateTime.now();
-    // post.setCreatedAt(currentDate);
+        // Obtengo el objeto Authentication de Spring Security para obtener el userAuth
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        log.info("PostController - deletePost() - Username auth -> " + username);
+        
+        // Verifico si el post existe
+        if (post != null) {
+            // Verifico si el usuario autenticado es el dueño del post o es un admin
+            if (post.getUsername().equals(username) || authentication.getAuthorities().toString().contains("admin")) {
+                postService.deletePost(postId);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                log.info("PostController - deletePost() - The userAuth doesn't match with the post.username" + post.getUsername());
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        } else {
+            throw new PostNotFoundException("Post not found");
+        }
+    }
 
-    // // ahora necesito obtener el user_id del user autenticado
-    // // Obtengo el objeto Authentication deSpring Security
-    // Authentication authentication =
-    // SecurityContextHolder.getContext().getAuthentication();
-
-    // // Obtengo el nombre de usuario del objeto Authentication
-    // String username = authentication.getName();
-    // log.info("Username auth -> " + username);
-
-    // // Busca al usuario en tu base de datos
-    // User user = userService.getUserByUsername(username);
-
-    // post.setUser(user);
-    // log.info("Post antes de enviarse" + post.toString());
-
-    // // guardo el post en la db
-    // postService.savePost(post);
-
-    // return ResponseEntity.ok(post);
-    // }
 }

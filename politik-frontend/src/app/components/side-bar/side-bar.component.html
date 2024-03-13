@@ -31,18 +31,19 @@
       </li>
     </ul>
     <hr>
-    <button class="btn btn-primary" id="postBtn">Post</button>
-    <div class="dropdown">
-      <a href="#" class="text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+    <button (click)="openDialogCreatePost()" class="btn btn-primary" id="postBtn">Post</button>
+    <div class="dropdown dropup">
+      <button class="btn text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
         data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/mdo.png" alt="profile photo" width="40" height="40" class="rounded-circle me-2">
         <div id="username">
           <div class="name"><h5>{{name}} {{lastname}}</h5></div>
           <div><h5>&#64;{{username}}</h5></div>
         </div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small" aria-labelledby="dropdownUser1">
-        <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
+        <i class="fa-solid fa-ellipsis text-end"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small" aria-labelledby="dropdownUser1">
+        <li><button class="dropdown-item" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i>Sign out</button></li>
       </ul>
     </div>
   </div>

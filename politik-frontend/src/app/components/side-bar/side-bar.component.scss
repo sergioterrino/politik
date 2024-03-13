@@ -53,18 +53,19 @@
     max-width: calc(100%);
     margin-bottom: 5%;
 
-    a {
+    button {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
+      width: 100%;
     }
 
     li:hover {
       background-color: rgb(52, 60, 68);
     }
 
-    a:hover {
-      border-radius: 25px;
+    button:hover {
       background-color: rgb(52, 60, 68);
     }
 
@@ -74,7 +75,7 @@
       overflow: hidden; // Evita que el texto sobresalga
       white-space: nowrap; // Evita saltos de línea
       text-overflow: ellipsis; // Muestra puntos suspensivos si el texto es demasiado largo
-      // padding-right: 6px; // Espacio entre el texto y el icono
+      text-align: start;
 
       h5 {
         margin: 0;
@@ -87,15 +88,32 @@
         font-size: 0.9rem;
         color: white;
       }
-
     }
 
     ul {
-      cursor: pointer;
-      li a:hover {
+      li button:hover {
         background-color: rgb(26, 26, 26);
-        border-radius: 2px;
       }
+
+      li button {
+        font-size: 1rem;
+        padding-top: 6%;
+        padding-bottom: 6%;
+        i {
+          margin-right: 10%;
+        }
+      }
+    }
+
+    .dropdown-menu {
+      background-color: rgb(0, 0, 0);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      padding: 0;
+    }
+
+    // quito la flechita del dropdown que viene por defecto
+    .dropdown-toggle::after {
+      display: none;
     }
   }
 }

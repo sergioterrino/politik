@@ -1,12 +1,12 @@
 
 export class Post {
-  postId!: number;
+  id!: number;
   userId!: number;
   username!: string;
-  name!: string;
-  lastname!: string;
+  createdAt!: string;
   text!: string;
   imagePath!: string;
   videoPath!: string;
-  createdAt!: string;
+  name!: string;
+  lastname!: string;
 }
