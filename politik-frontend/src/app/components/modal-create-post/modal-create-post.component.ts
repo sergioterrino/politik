@@ -16,6 +16,9 @@ export class ModalCreatePostComponent {
   videoPath: string = ""; // = que imagePath
   @ViewChild('myTextarea') myTextarea!: ElementRef; //para obtener el elemento <textarea> y limpiar el texto después de crear el post
 
+  //Para la parte de los posts
+  posts: Post[] = []; //Estos son todos los posts existetes, que se mostrarán en el home
+
   constructor(private postService: PostService, private dialog: MatDialog) { }
 
   onSubmitPost() {
@@ -42,11 +45,21 @@ export class ModalCreatePostComponent {
         this.text = ''; //limpio el textarea (ngModel)
         this.myTextarea.nativeElement.value = ''; //limpio el textarea (sin ngModel)
         this.closeDialog();
+        // this.getPosts(); //actualizo la lista de posts
       }
     })
 
     console.log('texto escrito en el textarea: ', this.text);
   }
+
+  // //metodo obtener todos los posts de la db
+  // getPosts() {
+  //   this.postService.getPosts().subscribe(data => {
+  //     console.log("modal-create.ts - getPosts() - data", data);
+  //     this.posts = data;
+  //     console.log("modal-create.ts - getPosts() - data", this.posts);
+  //   })
+  // }
 
   // setea el texto a guardar en la db con lo que haya en textarea
   onInput(event: any): void {

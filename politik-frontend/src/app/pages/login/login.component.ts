@@ -164,6 +164,7 @@ export class LoginComponent {
   private checkUsername(username: string): Observable<User | null> {
     return this.userService.getUserByUsername(username).pipe(
       map(user => {
+        console.log('checkUsername() - user: ', user);
         if (user) return user;
         else return null;
       }),
@@ -172,7 +173,7 @@ export class LoginComponent {
         return of(null);
       })
     );
-  } // Add closing parenthesis and semicolon here
+  } 
 
   private checkPhone(phone: string): Observable<User | null> {
     return this.userService.getUserByPhone(phone).pipe(

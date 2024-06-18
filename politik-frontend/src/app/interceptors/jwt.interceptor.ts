@@ -16,6 +16,7 @@ export class JwtInterceptor implements HttpInterceptor {
     console.log('JwtInterceptor is running--------------------------');
     // Obtener el token del almacenamiento local
     let jwt = localStorage.getItem('jwt');
+    console.log('jwtInterceptor -> jwt.localstorage: ', jwt);
 
     if (jwt) {
       // Clonar la solicitud y añadir el encabezado de autorización
