@@ -17,11 +17,11 @@ export class SuggestionsComponent {
   ngOnInit() {
     const user = this.userService.getCurrentUser();
     if (user) {
-      this.username = user.username;
-      this.name = user.name;
-      this.lastname = user.lastname;
+      // this.username = user.username;
+      // this.name = user.name;
+      // this.lastname = user.lastname;
     }
   }
-  
+
 
 }
